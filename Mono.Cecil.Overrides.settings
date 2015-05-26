@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- This optional import allows products that distribute Cecil to tweak settings that will affect its 
+       build, without having to fork the project unnecessarily. The Mono.Cecil.overrides file is a plain 
+       MSBuild file with additional properties, and can exist anywhere upwards from the current Cecil repo 
+       clone path, making it very flexible even if the project is submoduled. 
+  -->
+  <PropertyGroup>
+    <CecilOverrides Condition="'$(CecilOverrides)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), Mono.Cecil.overrides))\Mono.Cecil.overrides</CecilOverrides>
+  </PropertyGroup>  
+  <Import Project="$(CecilOverrides)" Condition="Exists($(CecilOverrides))" />
+</Project>
