@@ -9,4 +9,29 @@
     <CecilOverrides Condition="'$(CecilOverrides)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), Mono.Cecil.overrides))\Mono.Cecil.overrides</CecilOverrides>
   </PropertyGroup>  
   <Import Project="$(CecilOverrides)" Condition="Exists($(CecilOverrides))" />
+  
+  <!-- This is an example of a custom override file -->
+  <!--
+	<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	  <PropertyGroup>
+		<AssemblyName>$(AssemblyName.Replace('Mono', 'MyCompany'))</AssemblyName>
+		<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MyCompany.snk</AssemblyOriginatorKeyFile>
+	  </PropertyGroup>
+		<ItemGroup>
+			<Compile Include="$(MSBuildThisFileDirectory)MyCompany.AssemblyInfo.cs" />
+		</ItemGroup>
+	</Project>
+	
+	The additional AssemblyInfo.cs added to the Compile group provides the InternalsVisibleTo so that 
+	the Mdb/Pdb projects can compile successfully:
+	
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+[assembly: InternalsVisibleTo ("MyCompany.Cecil.Pdb, PublicKey=....")]
+[assembly: InternalsVisibleTo ("MyCompany.Cecil.Mdb, PublicKey=...")]
+[assembly: InternalsVisibleTo ("MyCompany.Cecil.Rocks, PublicKey=...")]
+[assembly: InternalsVisibleTo ("MyCompany.Cecil.Tests, PublicKey=...")]	
+  -->
 </Project>
